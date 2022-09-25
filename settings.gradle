@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Vectors"
 include ':app'
+include ':vectorcalculations-android'

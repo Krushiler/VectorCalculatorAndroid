@@ -1,8 +1,8 @@
-package com.example.vectors.domain.vector
+package com.example.vectorcalculations_android.vectorcalculations.vector
 
-import com.example.vectors.domain.util.applyForEach
-import com.example.vectors.domain.util.createFromEach
-import com.example.vectors.domain.util.ensureVectorsHaveSameDimens
+import com.example.vectorcalculations_android.vectorcalculations.util.applyForEach
+import com.example.vectorcalculations_android.vectorcalculations.util.createFromEach
+import com.example.vectorcalculations_android.vectorcalculations.util.ensureVectorsHaveSameDimens
 import kotlin.math.abs
 import kotlin.math.acos
 
@@ -11,7 +11,6 @@ interface VectorCalculator {
     fun subtract(v1: Vector, v2: Vector): Vector
 
     fun multiply(v1: Vector, n: Double): Vector
-    fun multiply(v1: Vector, v2: Vector): Vector
     fun multiplyScalar(v1: Vector, v2: Vector): Double
 
     fun divide(v1: Vector, n: Double): Vector
@@ -46,13 +45,6 @@ class RealVectorCalculator : VectorCalculator {
     override fun multiply(v1: Vector, n: Double): Vector {
         return v1.createFromEach { index ->
             v1.coordinates[index] * n
-        }
-    }
-
-    override fun multiply(v1: Vector, v2: Vector): Vector {
-        ensureVectorsHaveSameDimens(v1, v2)
-        return v1.createFromEach { index ->
-            v1.coordinates[index] * v2.coordinates[index]
         }
     }
 

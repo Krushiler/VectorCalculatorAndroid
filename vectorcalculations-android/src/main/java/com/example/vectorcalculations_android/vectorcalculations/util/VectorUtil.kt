@@ -1,6 +1,6 @@
-package com.example.vectors.domain.util
+package com.example.vectorcalculations_android.vectorcalculations.util
 
-import com.example.vectors.domain.vector.Vector
+import com.example.vectorcalculations_android.vectorcalculations.vector.Vector
 
 fun ensureVectorsHaveSameDimens(v1: Vector, v2: Vector) {
     if (v1.dimensions != v2.dimensions) throw IncorrectDimensionException("Vectors must have the same dimensions")
@@ -18,4 +18,9 @@ inline fun Vector.applyForEach(action: (index: Int) -> Unit) {
     for (i in coordinates.indices) {
         action.invoke(i)
     }
+}
+
+fun Vector.roundedTo(decimals: Int): Vector {
+    val cords = coordinates.map { it.roundTo(decimals) }
+    return Vector(cords)
 }

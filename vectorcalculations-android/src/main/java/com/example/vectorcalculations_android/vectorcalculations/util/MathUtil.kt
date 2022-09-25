@@ -1,4 +1,4 @@
-package com.example.vectors.util
+package com.example.vectorcalculations_android.vectorcalculations.util
 
 import kotlin.math.round
 

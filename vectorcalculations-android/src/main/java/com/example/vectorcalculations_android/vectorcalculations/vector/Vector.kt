@@ -1,7 +1,7 @@
-package com.example.vectors.domain.vector
+package com.example.vectorcalculations_android.vectorcalculations.vector
 
 import android.os.Parcelable
-import com.example.vectors.domain.util.IncorrectDimensionException
+import com.example.vectorcalculations_android.vectorcalculations.util.IncorrectDimensionException
 import kotlinx.parcelize.Parcelize
 import kotlin.math.sqrt
 
@@ -12,7 +12,7 @@ data class Vector(
 
     companion object {
         fun createNormalized(cords1: List<Double>, cords2: List<Double>): Vector {
-            if (cords1 != cords2) throw IncorrectDimensionException("Coordinates must have the save length")
+            if (cords1.size != cords2.size) throw IncorrectDimensionException("Coordinates must have the save length")
             val normalizedCords: List<Double> = cords2.mapIndexed { index, value ->
                 value - cords1[index]
             }
@@ -34,12 +34,12 @@ data class Vector(
 
     override fun toString(): String {
         return buildString {
-            append("[")
+            append('(')
             for (i in coordinates.indices) {
                 append(coordinates[i])
                 if (i < coordinates.size - 1) append(", ")
             }
-            append("]")
+            append(')')
         }
     }
 
