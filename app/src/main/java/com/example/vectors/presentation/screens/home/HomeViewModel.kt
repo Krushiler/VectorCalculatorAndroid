@@ -11,6 +11,10 @@ class HomeViewModel @Inject constructor() : ViewModel() {
     private val _state = mutableStateOf<HomeState>(HomeState.Init)
     val state: State<HomeState> = _state
 
+    fun backToMenu() {
+        _state.value = HomeState.Init
+    }
+
     fun dimensEntered(dimens: Int) {
         _state.value = HomeState.VectorInput(dimens)
     }

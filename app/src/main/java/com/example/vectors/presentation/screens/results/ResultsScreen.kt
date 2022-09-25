@@ -3,10 +3,7 @@ package com.example.vectors.presentation.screens.results
 import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
@@ -16,18 +13,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavType
-import com.example.vectors.domain.vector.Vector
-import com.example.vectors.domain.vector.VectorsCollinearity
+import com.example.vectorcalculations_android.vectorcalculations.vector.Vector
+import com.example.vectorcalculations_android.vectorcalculations.vector.VectorsCollinearity
 import com.example.vectors.navigation.NavigationDestination
 import com.example.vectors.util.parcelable
-import com.example.vectors.util.roundTo
+import com.example.vectorcalculations_android.vectorcalculations.util.roundTo
+import com.example.vectorcalculations_android.vectorcalculations.util.roundedTo
+import com.google.accompanist.insets.statusBarsPadding
 import com.google.gson.Gson
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ResultsScreenData(
-    val v1: Vector,
-    val v2: Vector
+    val v1: com.example.vectorcalculations_android.vectorcalculations.vector.Vector,
+    val v2: com.example.vectorcalculations_android.vectorcalculations.vector.Vector
 ) : Parcelable {
     companion object NavigationType : NavType<ResultsScreenData>(isNullableAllowed = false) {
         override fun get(bundle: Bundle, key: String): ResultsScreenData? {
@@ -59,33 +58,36 @@ fun ResultsScreen(viewModel: ResultsViewModel, data: ResultsScreenData) {
         is ResultsState.FewVectors -> Column(
             Modifier
                 .fillMaxSize()
+                .statusBarsPadding()
                 .verticalScroll(
                     rememberScrollState()
                 )
+                .padding(all = 16.dp)
         ) {
             val state = screenState as ResultsState.FewVectors
-            Text(text = "${data.v1} Длина: ${data.v1.length.roundTo(3)}")
+            Text(text = data.v1.toString())
+            Text(text = "Длина: ${data.v1.length.roundTo(3)}")
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "${data.v2} Длина: ${data.v2.length.roundTo(3)}")
+            Text(text = data.v2.toString())
+            Text(text = "Длина: ${data.v2.length.roundTo(3)}")
             Spacer(modifier = Modifier.height(16.dp))
 
-            Result("Сумма", state.sum.toString())
-            Result("Разность", state.subtract.toString())
+            Result("Сумма", state.sum.roundedTo(3).toString())
+            Result("Разность", state.subtract.roundedTo(3).toString())
 
             Result(
-                "Произведение", "Скалярное: ${state.multiplyScalar.roundTo(3)}",
-                "Векторное: ${state.multiplyVector}"
+                "Скалярное произведение", "${state.multiplyScalar.roundTo(3)}"
             )
 
             Result("Косинус угла", state.cos.roundTo(3).toString())
 
-            if (state.collinearity == VectorsCollinearity.NOT_COLLINEAR) {
+            if (state.collinearity == com.example.vectorcalculations_android.vectorcalculations.vector.VectorsCollinearity.NOT_COLLINEAR) {
                 Result("Коллинеарность векторов", "Не коллинеарны")
             } else {
                 Result("Коллинеарность векторов", "Коллинеанры")
                 val directionString = when (state.collinearity) {
-                    VectorsCollinearity.CO_DIRECTIONAL -> "Сонаправлены"
-                    VectorsCollinearity.OPPOSITE -> "Противоположны"
+                    com.example.vectorcalculations_android.vectorcalculations.vector.VectorsCollinearity.CO_DIRECTIONAL -> "Сонаправлены"
+                    com.example.vectorcalculations_android.vectorcalculations.vector.VectorsCollinearity.OPPOSITE -> "Противоположны"
                     else -> ""
                 }
                 Result("Направленность векторов: ", directionString)
@@ -99,8 +101,8 @@ fun ResultsScreen(viewModel: ResultsViewModel, data: ResultsScreenData) {
 
             Result(
                 "Проекция вектора 1 на вектор 2",
-                "Скалярная: ${state.projectionScalar.roundTo(3)}",
-                "Векторная: ${state.projectionScalar}"
+                "Скалярная:", "${state.projectionScalar.roundTo(3)}",
+                "Векторная:", "${state.projectionScalar.roundTo(3)}"
             )
         }
     }

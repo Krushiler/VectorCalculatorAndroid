@@ -1,4 +1,4 @@
-package com.example.vectors.domain.vector
+package com.example.vectorcalculations_android.vectorcalculations.vector
 
 enum class VectorsCollinearity {
     NOT_COLLINEAR,
