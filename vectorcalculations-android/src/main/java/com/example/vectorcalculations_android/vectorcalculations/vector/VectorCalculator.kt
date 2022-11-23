@@ -10,7 +10,7 @@ interface VectorCalculator {
     fun sum(v1: Vector, v2: Vector): Vector
     fun subtract(v1: Vector, v2: Vector): Vector
 
-    fun multiply(v1: Vector, n: Double): Vector
+    fun     multiply(v1: Vector, n: Double): Vector
     fun multiplyScalar(v1: Vector, v2: Vector): Double
 
     fun divide(v1: Vector, n: Double): Vector

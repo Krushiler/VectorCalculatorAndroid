@@ -10,6 +10,8 @@ data class Vector(
     val coordinates: List<Double>
 ) : Parcelable {
 
+    operator fun get(index: Int) = coordinates[index]
+
     companion object {
         fun createNormalized(cords1: List<Double>, cords2: List<Double>): Vector {
             if (cords1.size != cords2.size) throw IncorrectDimensionException("Coordinates must have the save length")

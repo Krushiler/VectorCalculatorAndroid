@@ -1,4 +1,4 @@
-package com.example.vectors.presentation.screens.home
+package com.example.vectors.presentation.screens.vectors.home
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf

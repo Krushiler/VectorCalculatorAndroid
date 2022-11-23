@@ -1,4 +1,4 @@
-package com.example.vectors.presentation.screens.home
+package com.example.vectors.presentation.screens.vectors.home
 
 sealed class HomeState {
     object Init: HomeState()

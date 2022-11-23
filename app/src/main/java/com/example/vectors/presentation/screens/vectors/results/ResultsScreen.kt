@@ -1,4 +1,4 @@
-package com.example.vectors.presentation.screens.results
+package com.example.vectors.presentation.screens.vectors.results
 
 import android.net.Uri
 import android.os.Bundle
@@ -13,8 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavType
-import com.example.vectorcalculations_android.vectorcalculations.vector.Vector
-import com.example.vectorcalculations_android.vectorcalculations.vector.VectorsCollinearity
 import com.example.vectors.navigation.NavigationDestination
 import com.example.vectors.util.parcelable
 import com.example.vectorcalculations_android.vectorcalculations.util.roundTo
@@ -45,7 +43,7 @@ data class ResultsScreenData(
 
 fun navigateToResults(navController: NavController, data: ResultsScreenData) {
     val dataJson = Uri.encode(Gson().toJson(data))
-    navController.navigate("${NavigationDestination.ResultsScreen.name}/$dataJson")
+    navController.navigate("${NavigationDestination.VectorResultsScreen.name}/$dataJson")
 }
 
 @Composable

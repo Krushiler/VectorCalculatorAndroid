@@ -1,7 +1,4 @@
-package com.example.vectors.presentation.screens.results
-
-import com.example.vectorcalculations_android.vectorcalculations.vector.Vector
-import com.example.vectorcalculations_android.vectorcalculations.vector.VectorsCollinearity
+package com.example.vectors.presentation.screens.vectors.results
 
 sealed class ResultsState{
     object Init: ResultsState()

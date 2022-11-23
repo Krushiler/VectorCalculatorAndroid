@@ -1,10 +1,8 @@
-package com.example.vectors.presentation.screens.results
+package com.example.vectors.presentation.screens.vectors.results
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.vectorcalculations_android.vectorcalculations.vector.Vector
-import com.example.vectorcalculations_android.vectorcalculations.vector.VectorCalculator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

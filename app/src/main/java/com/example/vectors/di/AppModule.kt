@@ -1,5 +1,7 @@
 package com.example.vectors.di
 
+import com.example.vectorcalculations_android.vectorcalculations.matrix.MatrixCalculator
+import com.example.vectorcalculations_android.vectorcalculations.matrix.RealMatrixCalculator
 import com.example.vectorcalculations_android.vectorcalculations.vector.RealVectorCalculator
 import com.example.vectorcalculations_android.vectorcalculations.vector.VectorCalculator
 import dagger.Module
@@ -16,4 +18,10 @@ class AppModule {
     @Singleton
     fun provideVectorCalculator(): VectorCalculator =
         RealVectorCalculator()
+
+    @Provides
+    @Singleton
+    fun provideMatrixCalculator(vectorCalculator: VectorCalculator): MatrixCalculator =
+        RealMatrixCalculator(vectorCalculator)
+
 }

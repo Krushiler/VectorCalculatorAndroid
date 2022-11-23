@@ -1,4 +1,4 @@
-package com.example.vectors.presentation.screens.home
+package com.example.vectors.presentation.screens.matrix.home
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
@@ -17,18 +17,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.vectorcalculations_android.vectorcalculations.vector.Vector
-import com.example.vectors.presentation.screens.results.ResultsScreenData
-import com.example.vectors.presentation.screens.results.navigateToResults
+import com.example.vectors.presentation.screens.vectors.results.ResultsScreenData
+import com.example.vectors.presentation.screens.vectors.results.navigateToResults
 import com.example.vectors.presentation.views.CordsInput
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsWithImePadding
 import com.google.accompanist.insets.statusBarsPadding
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
+fun MatrixHomeScreen(viewModelMatrix: MatrixHomeViewModel, navController: NavController) {
 
-    val screenState by viewModel.state
+    val screenState by viewModelMatrix.stateMatrix
 
     ProvideWindowInsets(windowInsetsAnimationsEnabled = true) {
         Column(
@@ -41,7 +40,7 @@ fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             when (screenState) {
-                HomeState.Init -> {
+                MatrixHomeState.Init -> {
                     val dimens = remember {
                         mutableStateOf("")
                     }
@@ -57,18 +56,18 @@ fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Button(onClick = {
-                        viewModel.dimensEntered(dimens.value.toInt())
+                        viewModelMatrix.dimensEntered(dimens.value.toInt())
                     }) {
                         Text(text = "Ввод")
                     }
                 }
-                is HomeState.VectorInput -> {
+                is MatrixHomeState.VectorInput -> {
 
                     BackHandler {
-                        viewModel.backToMenu()
+                        viewModelMatrix.backToMenu()
                     }
 
-                    val state = screenState as HomeState.VectorInput
+                    val state = screenState as MatrixHomeState.VectorInput
                     val firstCord = remember {
                         mutableStateOf(List(size = state.dimens, init = { 0.0 }))
                     }
