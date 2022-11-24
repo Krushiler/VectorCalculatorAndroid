@@ -10,6 +10,16 @@ data class Vector(
     val coordinates: List<Double>
 ) : Parcelable {
 
+    override fun equals(other: Any?): Boolean {
+        if (other == null) return false
+        if (other !is Vector) return false
+        if (coordinates.size != other.coordinates.size) return false
+        for (i in coordinates.indices) {
+            if (coordinates[i] != other.coordinates[i]) return false
+        }
+        return true
+    }
+
     operator fun get(index: Int) = coordinates[index]
 
     companion object {

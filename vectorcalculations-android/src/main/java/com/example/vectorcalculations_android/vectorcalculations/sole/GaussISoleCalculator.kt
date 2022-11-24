@@ -5,25 +5,19 @@ import com.example.vectorcalculations_android.vectorcalculations.matrix.MatrixCa
 import com.example.vectorcalculations_android.vectorcalculations.vector.Vector
 import com.example.vectorcalculations_android.vectorcalculations.vector.VectorCalculator
 
-interface SoleCalculator {
-    fun solveSole(a: Matrix, b: Matrix): List<Double>
-}
-
-class RealSoleCalculator(
+class GaussISoleCalculator(
     private val matrixCalculator: MatrixCalculator,
     private val vectorCalculator: VectorCalculator
-) : SoleCalculator {
+) : ISoleCalculator {
 
     override fun solveSole(a: Matrix, b: Matrix): List<Double> {
         var ab = matrixCalculator.extend(a, b)
-
         ab = findInverseMatrixForLowerHalf(ab)
         ab = getReversedMatrix(ab)
         ab = findInverseMatrixForLowerHalf(ab)
 
         return ab.columns.last().coordinates.reversed()
     }
-
 
     private fun findInverseMatrixForLowerHalf(m: Matrix): Matrix {
         var inverse = m

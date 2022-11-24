@@ -13,6 +13,8 @@ interface MatrixCalculator {
     fun multiplyRow(m1: Matrix, row: Int, n: Double): Matrix
 
     fun extend(m1: Matrix, m2: Matrix): Matrix
+
+    fun inverse(m: Matrix): Matrix
 }
 
 class RealMatrixCalculator(private val vectorCalculator: VectorCalculator) : MatrixCalculator {
@@ -70,4 +72,71 @@ class RealMatrixCalculator(private val vectorCalculator: VectorCalculator) : Mat
         return Matrix(extendedRows)
     }
 
+    override fun inverse(m: Matrix): Matrix {
+        var matrix = extend(m, m.createFromEach { _, row, column ->
+            if (row == column) 1.0
+            else 0.0
+        })
+        matrix = findInverseMatrixForLowerHalf(matrix)
+        matrix = getReversedMatrix(matrix)
+        matrix = findInverseMatrixForLowerHalf(matrix, lastRow = matrix.rows.size - 1)
+        matrix = getReversedMatrix(matrix)
+
+        val resultMatrixCords = mutableListOf<List<Double>>()
+        for (row in matrix.rows) {
+            val cords = mutableListOf<Double>()
+            for (columnIndex in matrix.columns.size / 2 until matrix.columns.size) {
+                cords.add(row[columnIndex])
+            }
+            resultMatrixCords.add(cords)
+        }
+        return Matrix.fromDoubles(resultMatrixCords)
+    }
+
+    private fun findInverseMatrixForLowerHalf(m: Matrix, lastRow: Int = m.rows.size): Matrix {
+        var inverse = m
+
+        for (i in 0 until lastRow) {
+            val multiplier = inverse[i][i]
+            inverse = inverse.setRow(
+                i, vectorCalculator.multiply(
+                    inverse[i], 1 / multiplier
+                )
+            )
+            for (j in i + 1 until m.rows.size) {
+                val first = vectorCalculator.multiply(inverse[i], inverse[j][i])
+                inverse = inverse.setRow(
+                    j, vectorCalculator.subtract(
+                        inverse[j], first
+                    )
+                )
+            }
+            inverse = sortInverseMatrix(inverse)
+        }
+        return inverse
+    }
+
+    private fun getReversedMatrix(m: Matrix): Matrix {
+        val rowsCount = m.rows.size
+        var result = m
+        for (i in 0 until rowsCount / 2) {
+            result = result.swapRows(i, rowsCount - 1 - i)
+        }
+        for (i in 0 until rowsCount / 2) {
+            result = result.swapColumns(i, rowsCount - 1 - i)
+        }
+        return result
+    }
+
+    private fun sortInverseMatrix(m: Matrix): Matrix = Matrix(m.rows.sortedBy {
+        var zeros = 0
+        for (i in 0 until it.coordinates.size / 2) {
+            if (it.coordinates[i] == 0.0) {
+                zeros++
+            } else {
+                return@sortedBy zeros
+            }
+        }
+        return@sortedBy zeros
+    })
 }

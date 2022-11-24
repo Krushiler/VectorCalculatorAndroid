@@ -18,6 +18,7 @@ data class Matrix(
             set(index, row)
         })
 
+
     companion object {
         fun fromColumns(columns: List<Vector>): Matrix =
             Matrix(columns).transposed()
@@ -42,7 +43,6 @@ data class Matrix(
             }
             return result.toList()
         }
-
     override fun toString(): String {
         return buildString {
             for (row in rows) {

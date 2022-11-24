@@ -2,16 +2,20 @@ package com.example.vectorcalculations_android
 
 import com.example.vectorcalculations_android.vectorcalculations.matrix.Matrix
 import com.example.vectorcalculations_android.vectorcalculations.matrix.RealMatrixCalculator
-import com.example.vectorcalculations_android.vectorcalculations.sole.RealSoleCalculator
+import com.example.vectorcalculations_android.vectorcalculations.sole.GaussISoleCalculator
+import com.example.vectorcalculations_android.vectorcalculations.sole.ISoleCalculator
+import com.example.vectorcalculations_android.vectorcalculations.sole.InverseMatrixSoleCalculator
 import com.example.vectorcalculations_android.vectorcalculations.vector.RealVectorCalculator
 import junit.framework.TestCase
 
-class RealSoleCalculatorTest : TestCase() {
-    private lateinit var calculator: RealSoleCalculator
+class SoleCalculatorTest : TestCase() {
+    private lateinit var calculator: ISoleCalculator
+
+    private val gaussSoleCalculator = GaussISoleCalculator(RealMatrixCalculator(RealVectorCalculator()), RealVectorCalculator())
+    private val inverseMatrixSoleCalculator = InverseMatrixSoleCalculator(RealMatrixCalculator(RealVectorCalculator()), RealVectorCalculator())
 
     public override fun setUp() {
-        calculator =
-            RealSoleCalculator(RealMatrixCalculator(RealVectorCalculator()), RealVectorCalculator())
+        calculator = inverseMatrixSoleCalculator
     }
 
     fun test3dSole() {
@@ -38,18 +42,18 @@ class RealSoleCalculatorTest : TestCase() {
 
     fun test2dSole() {
         assertEquals(
-            listOf(2.5, -1.0),
+            listOf(-4.0, 5.0),
             calculator.solveSole(
                 Matrix.fromDoubles(
                     listOf(
-                        listOf(2.0, 3.0),
-                        listOf(4.0, 3.0),
+                        listOf(1.0, 2.0),
+                        listOf(3.0, 4.0),
                     )
                 ),
                 Matrix.fromDoubles(
                     listOf(
-                        listOf(2.0),
-                        listOf(7.0),
+                        listOf(6.0),
+                        listOf(8.0),
                     )
                 )
             )
